@@ -1,6 +1,6 @@
 #define N 2
 #define BUDGET 4
-#define MAX_WORK 8
+#define MAX_WORK 12
 
 byte dlMarkWork[N];
 byte dlSweepWork[N];
