@@ -1,7 +1,7 @@
 #define NUM_DOMAINS 2
 #define BUDGET 1
-#define MAX_WORK 1
-#define MAX_EPHEMERON_DEPTH 1
+#define MAX_WORK 2
+#define EPHE_DEPTH 2
 
 #define PHASE_MARK 0
 #define PHASE_SWEEP_EPHE 1
@@ -72,12 +72,10 @@ inline markEphe (budget, cached, domainId) {
 				byte w;
 				select (w : 0 .. MAX_WORK);
 				dlMarkWork[domainId] = w;
-				if
-				:: budget = 0  							/* Exhausted budget marking ephemerons */
-				:: dlEpheDepth[domainId]--  /* Fully marked ephemrons for this round (budget > 0) */
-				fi;
+				dlEpheDepth[domainId]--;
+				/* Fully marked ephemrons for this round (budget > 0) */
 			}
-	:: dlEpheDepth[domainId]--
+	:: skip
 	fi;
   printf ("[%d] markEphe(2): budget=%d dlEpheDepth[%d]=%d\n",
 	        domainId, budget, domainId, dlEpheDepth[domainId]);
@@ -183,7 +181,7 @@ init {
 	  dlMarkingDone[i] = 0;
 		dlEpheRound[i] = 0;
 		dlSweepEpheDone[i] = 0;
-		dlEpheDepth[i] = MAX_EPHEMERON_DEPTH;
+		dlEpheDepth[i] = EPHE_DEPTH;
 	}
 
   gNumDomsToMark = NUM_DOMAINS;
