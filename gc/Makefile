@@ -1,4 +1,4 @@
-all: major_slice.exe
+all: major_slice.exe ephemerons.exe
 
 %.exe: %.pml
 	spin -a $<
